@@ -1,0 +1,53 @@
+name: Build DAT
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'txt/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/build-dat.yml'
+  pull_request:
+    paths:
+      - 'txt/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/build-dat.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-dat-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test converter
+        run: python -m unittest discover -s tests -v
+      - name: Build DAT
+        run: python scripts/build_dat.py
+      - name: Save updated DAT
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dat/
+          if git diff --cached --quiet; then
+            echo "DAT files are already up to date"
+            exit 0
+          fi
+          git commit -m "Rebuild DAT from TXT"
+          git push origin HEAD:main
