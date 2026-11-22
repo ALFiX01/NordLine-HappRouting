@@ -1,0 +1,41 @@
+name: Purge jsDelivr
+
+on:
+  workflow_run:
+    workflows: [Build DAT]
+    types: [completed]
+    branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - 'dat/geoip.dat'
+      - 'dat/geosite.dat'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: purge-jsdelivr-main
+  cancel-in-progress: false
+
+jobs:
+  purge:
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      github.event.workflow_run.event != 'pull_request'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Purge and verify DAT files
+        run: python scripts/purge_jsdelivr.py

@@ -1,5 +1,9 @@
 # NordLine Happ Routing
 
+## Добавить профиль NordLine в Happ
+
+[Профиль NordLine для Happ](https://raw.githubusercontent.com/ALFiX01/NordLine-HappRouting/refs/heads/main/HAPP/DEFAULT.DEEPLINK)
+
 ## Файлы маршрутизации
 
 **GeoIP — IP-адреса и подсети:**
@@ -27,7 +31,7 @@ https://cdn.jsdelivr.net/gh/ALFiX01/NordLine-HappRouting@main/dat/geosite.dat
 - Готовые **DAT** доступны для подключения по ссылкам выше.
 - Исходные **TXT** можно просматривать и редактировать в репозитории.
 
-## Использование в Happ
+## Ручная настройка в Happ
 
 1. В настройках маршрутизации укажите ссылку на `geoip.dat` для GeoIP и на `geosite.dat` для GeoSite.
 2. Загрузите или обновите файлы в приложении.
@@ -60,6 +64,8 @@ https://cdn.jsdelivr.net/gh/ALFiX01/NordLine-HappRouting@main/dat/geosite.dat
 Редактируйте `txt/geoip.txt` или `txt/geosite.txt` и сохраняйте изменения в ветку `main`. GitHub Actions автоматически проверит списки, пересоберёт DAT и сохранит обновлённые файлы в `dat/`.
 
 [Статус сборки](https://github.com/ALFiX01/NordLine-HappRouting/actions) · [Ручной запуск сборки](https://github.com/ALFiX01/NordLine-HappRouting/actions/workflows/build-dat.yml)
+
+После успешной сборки или прямого обновления DAT в `main` GitHub Actions запрашивает сброс кеша jsDelivr и сверяет оба файла с репозиторием. Сброс можно повторить вручную через [Purge jsDelivr](https://github.com/ALFiX01/NordLine-HappRouting/actions/workflows/purge-jsdelivr.yml).
 
 При ошибке в TXT сборка остановится с указанием строки; существующие DAT не заменяются.
 
