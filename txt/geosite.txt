@@ -119,10 +119,7 @@ domain:credit-zenit.ru
 domain:forshtadt.ru
 domain:ibamoscow.ru
 domain:ifconfig.me
-domain:ip.sb
-domain:ipapi.is
 domain:ipify.org
-domain:iplocate.io
 domain:jpmorgan.ru
 domain:kinescope.io
 domain:kinescopecdn.net
@@ -156,6 +153,10 @@ domain:westernunion.ru
 domain:yoobusiness.ru
 domain:zenit-card.ru
 domain:ziraatbank.ru
+domain:appstorrent.ru
+domain:lava.ru
+domain:zr.ru
+domain:api.sypexgeo.net
 
 [GITHUB]
 domain:atom.io
@@ -1009,7 +1010,6 @@ domain:investalfabank.com
 domain:ip.sb
 domain:ipapi.is
 domain:ipify.org
-domain:iplocate.io
 domain:irk.ru
 domain:irkutsk.ru
 domain:ivanovo.ru
